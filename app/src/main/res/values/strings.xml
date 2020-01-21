@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SkyChat</string>
+    <string name="error_invalid_email">incorrect email address pattern</string>
+</resources>
