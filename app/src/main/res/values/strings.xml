@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">SkyChat</string>
+    <string name="error_invalid_email">incorrect email address pattern</string>
+    <string name="register_poor_connectivity_sms">Please, Connect to internet to Register</string>
+
+    <string name="register_error_surname">Please, Enter Your Surname</string>
+    <string name="register_error_othername">Please, Enter Your Other Name</string>
+    <string name="logo">logo</string>
+    <string name="email">Email</string>
+    <string name="email_address">Email Address</string>
+    <string name="username">Username</string>
+</resources>

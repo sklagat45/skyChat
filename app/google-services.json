@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "686454530011",
+    "firebase_url": "https://skychat-a8d46.firebaseio.com",
+    "project_id": "skychat-a8d46",
+    "storage_bucket": "skychat-a8d46.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686454530011:android:0a7929f51fef4b4396d1fe",
+        "android_client_info": {
+          "package_name": "com.sklagat46.skychat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686454530011-k5hsg74n2c956os2ualmdpt28htfag41.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sklagat46.skychat",
+            "certificate_hash": "54cfb99901c394314e8c486c9f27af98a6d51592"
+          }
+        },
+        {
+          "client_id": "686454530011-ebv21cuqi8p724i4534dc8ebuoueshqu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmOQ1ZaZ9wvUx6dYWUiJOEXtlw-qA2ypY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "686454530011-ebv21cuqi8p724i4534dc8ebuoueshqu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
