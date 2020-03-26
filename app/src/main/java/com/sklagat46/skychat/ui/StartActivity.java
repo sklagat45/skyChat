@@ -1,9 +1,9 @@
 package com.sklagat46.skychat.ui;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,118 +16,133 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sklagat46.skychat.R;
-import com.sklagat46.skychat.views.UserProfile;
+import com.wang.avi.AVLoadingIndicatorView;
 
-import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+
+import static butterknife.ButterKnife.bind;
+
 
 public class StartActivity extends AppCompatActivity {
-    private View view;
-
-    private File file;
-    private String iname;
+    Button btnRegister;
+    FirebaseAuth mAuth;
+    DatabaseReference databaseUserProfile;
+    AVLoadingIndicatorView avi;
     @BindView(R.id.ETUsername)
     EditText user_name;
+    @BindView( R.id.BtnSignIn)
+    Button sign_in;
     @BindView(R.id.ETUserEmail)
     EditText user_email;
     @BindView(R.id.ETPassword)
     EditText user_password;
-    @BindView(R.id.BtnSignup)
-    Button btnregister;
-
-    public static Activity activity;
-    private FirebaseAuth auth;
-    private FirebaseUser firebaseUser;
-    DatabaseReference databaseUserProfile;
-    private CharSequence email;
-
+    @BindView(R.id.BtnSignUp)
+    Button btnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        ButterKnife.bind(this);
-        FirebaseAuth auth;
-//        //addListenerOnButton();
-        auth = FirebaseAuth.getInstance();
-        databaseUserProfile = FirebaseDatabase.getInstance().getReference("userProfile");
-//
-//        //get firebase instance
-        firebaseUser = auth.getCurrentUser();
+        bind(this);
+        avi=findViewById(R.id.avi);
+        mAuth = FirebaseAuth.getInstance();
 
-        btnregister.setOnClickListener(new View.OnClickListener() {
+        sign_in.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent startIntent = new Intent(getApplicationContext(),SignInActivity.class);
-                        startActivity(startIntent);
+                startActivity(startIntent);
                 finish();
             }
         });
-        btnregister.setOnClickListener(new View.OnClickListener() {
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                addUserProfile();
+            public void onClick(View v) {
+                if (validate()) {
+                    register(user_email.getText().toString(), user_password.getText().toString(), user_name.getText().toString());
+                }
             }
         });
 
     }
-    private void addUserProfile() {
-        String username = user_name.getText().toString().trim();
-        String userEmail = user_email.getText().toString().trim();
-        String Userpassword = user_password.getText().toString().trim();
+    private void register(final String email, String password, final String username) {
+        avi.show();
+        avi.setVisibility(View.VISIBLE);
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 
-        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(userEmail) || TextUtils.isEmpty(Userpassword)) {
-
-            Toast.makeText(getApplicationContext(), "Please enter all the details", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (Userpassword.length() < 6) {
-
-            Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (user_email.getText().length() == 0 || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            user_email.setError(getString(R.string.error_invalid_email));
-            return;
-        }else {
-
-            String id = databaseUserProfile.push().getKey();
-            UserProfile userProfile = new UserProfile(id, username, userEmail, Userpassword);
-            databaseUserProfile.child(id).setValue(userProfile);
-            Toast.makeText(getApplicationContext(), "user added", Toast.LENGTH_SHORT).show();
-        }
-        Task<AuthResult> authResultTask = auth.createUserWithEmailAndPassword(userEmail, Userpassword)
-                .addOnCompleteListener(StartActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        firebaseUser = auth.getCurrentUser();
-
-                        Toast.makeText(StartActivity.this, "account created successfully:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(StartActivity.this, "Authentication failed." + task.getException(),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-
-                            startActivity(new Intent(StartActivity.this, com.sklagat46.skychat.ui.SignInActivity.class
-                            ));
-                            finish();
-                        }
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                try {
+                    if (!task.isSuccessful()) {
+                        //Log.e("REGISTER_EX",task.getException().getMessage());
+                        avi.hide();
+                        Toast.makeText(StartActivity.this,
+                                task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        createNewUser(email, username,mAuth.getCurrentUser().getUid());
                     }
-                    //create user
+                } catch (Exception e) {
+                    avi.hide();
+                    Log.e("REGISTER_EX", e.getMessage(), e);
+                }
+                //hideProgressDialog();
+            }
+        });
+    }
+    private void createNewUser(String email, final String username, String uid) {
+        databaseUserProfile = FirebaseDatabase.getInstance().getReference().child("skyChat").child("userProfile").child(uid);
+        databaseUserProfile.child("email").setValue(email);
+        databaseUserProfile.child("username").setValue(username).addOnCompleteListener(new OnCompleteListener<Void>() {
 
-                });
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                avi.hide();
+                Intent intent=new Intent(StartActivity.this, SignInActivity.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+    private boolean validate() {
+        boolean isValid;
+        if (user_name.getText().toString().equals("")){
+            user_name.setError("Username is required");
+            isValid = false;
+        } else if (user_email.getText().toString().equals("")) {
+            user_email.setError("Email is required");
+            isValid = false;
+        } else if (!isEmailValid(user_email.getText().toString())) {
+            user_email.setError("Enter a valid email");
+            isValid = false;
+        } else if (user_password.getText().toString().equals("")) {
+            user_password.setError("Password is required");
+            isValid = false;
+        }else if (user_password.getText().toString().length()<6){
+            user_password.setError("Password must not be less than 6 characters");
+            isValid=false;
         }
-
-        @Override
-        protected void onResume() {
-            super.onResume();
-
-
-}
+        else {
+            isValid = true;
+        }
+        return isValid;
+    }
+    public boolean isEmailValid(String email) {
+        String regExpn =
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
 }

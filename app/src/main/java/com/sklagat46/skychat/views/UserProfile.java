@@ -1,16 +1,16 @@
 package com.sklagat46.skychat.views;
 
 public class UserProfile {
-    public String userProfileId;
-    public String username;
-    public String user_email;
-    public String password;
+    public static String userProfileId;
+    public static String txtusername;
+    public static String txtuser_email;
+    public static String txtpassword;
 
     public UserProfile(String userProfileId, String username, String user_email,String password) {
-        this.userProfileId =userProfileId;
-        this.username=username;
-        this.user_email = user_email;
-        this.password = password;
+        this.userProfileId ="";
+        this.txtusername="";
+        this.txtuser_email = "";
+        this.txtpassword = "";
 
     }
     public String getUserProfileId() {
@@ -22,27 +22,27 @@ public class UserProfile {
     }
 
     public String getUsername() {
-        return username;
+        return txtusername;
     }
 
     public void setUsername(String username) {
-        this.username=username;
+        this.txtusername=username;
     }
 
     public String getUserEmail() {
-        return user_email;
+        return txtuser_email;
     }
 
     public void setUserEmail(String userEmail) {
-        this.user_email = userEmail;
+        this.txtuser_email = userEmail;
     }
 
     public String getPassword() {
-        return password;
+        return txtpassword;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.txtpassword = password;
     }
 }
 
