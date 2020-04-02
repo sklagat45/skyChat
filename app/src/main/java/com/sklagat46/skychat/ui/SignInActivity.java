@@ -2,7 +2,9 @@ package com.sklagat46.skychat.ui;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -95,12 +97,22 @@ public class SignInActivity extends AppCompatActivity {
                                     JSONObject obj = new JSONObject(s);
 
                                     if(!obj.has(user)){
+                                        Intent startIntent = new Intent(getApplicationContext(),ChatActivity.class);
+                                        startIntent.putExtra("username", user);
+                                        SharedPreferences sp =getSharedPreferences("sp", Context.MODE_PRIVATE);
+                                        //save username throught the app
+                                        sp.edit().putString("username",user).apply();
+                                        //save session throughout the app
+                                        sp.edit().putBoolean("loggedin",true).apply();
+                                        startActivity(startIntent);
+                                        finish();
                                         Toast.makeText(SignInActivity.this, "user not found", Toast.LENGTH_LONG).show();
                                     }
                                     else if(obj.getJSONObject(user).getString("password").equals(pass)){
                                         UserProfile.txtusername = user;
                                         UserProfile.txtpassword = pass;
-                                        startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                                        startActivity(new Intent(SignInActivity.this, ChatActivity.class));
+                                        finish();
                                     }
                                     else {
                                         Toast.makeText(SignInActivity.this, "incorrect password", Toast.LENGTH_LONG).show();
@@ -125,7 +137,5 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-//                Intent startIntent = new Intent(getApplicationContext(),MainActivity.class);
-//                startActivity(startIntent);
-//                finish();
+
             }}

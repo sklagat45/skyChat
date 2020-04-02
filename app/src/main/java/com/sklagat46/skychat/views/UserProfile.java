@@ -5,6 +5,7 @@ public class UserProfile {
     public static String txtusername;
     public static String txtuser_email;
     public static String txtpassword;
+    public static String chatWith = "";
 
     public UserProfile(String userProfileId, String username, String user_email,String password) {
         this.userProfileId ="";

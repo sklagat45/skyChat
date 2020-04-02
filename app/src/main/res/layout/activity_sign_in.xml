@@ -6,7 +6,7 @@
     android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#AFCEDF"
+    android:background="@color/background"
     tools:context=".ui.SignInActivity">
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -28,7 +28,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="32dp"
             android:contentDescription="@string/logo"
-            android:src="@drawable/skychat_logo" />
+            android:src="@drawable/icon" />
 
         <EditText
             android:id="@+id/ETUserName"
