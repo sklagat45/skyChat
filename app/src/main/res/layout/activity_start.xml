@@ -9,14 +9,22 @@
     android:background="@color/background"
     tools:context=".ui.StartActivity">
 
+    <include
+        android:id="@+id/register_toolbar"
+        layout="@layout/app_bar_layout"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="355dp"
+        android:layout_height="556dp"
+        android:layout_margin="30dp"
+        android:layout_marginTop="76dp"
         android:background="#AFCEDF"
         android:orientation="vertical"
-        android:layout_margin="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -93,31 +101,32 @@
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/BtnSignIn"
-        android:layout_width="122dp"
-        android:layout_height="42dp"
-        android:text="@string/common_signin_button_text"
-        app:layout_constraintEnd_toStartOf="@+id/BtnSignUp"
-        app:layout_constraintHorizontal_bias="0.192"
-        android:background="@color/colorPrimary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/BtnSignUp"
-        android:layout_width="130dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="28dp"
-        android:background="@color/colorPrimary"
-        android:text="Register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/BtnSignIn"
+                android:layout_width="122dp"
+                android:layout_height="42dp"
+                android:background="@color/colorPrimary"
+                android:text="@string/common_signin_button_text"
+                app:layout_constraintEnd_toStartOf="@+id/BtnSignUp"
+                app:layout_constraintHorizontal_bias="0.192"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/BtnSignUp"
+                android:layout_width="130dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="28dp"
+                android:background="@color/colorPrimary"
+                android:text="Register"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </LinearLayout>
