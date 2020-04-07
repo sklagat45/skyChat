@@ -61,6 +61,26 @@ public class StartActivity extends AppCompatActivity {
                 finish();
             }
         });
+//        mAuth.createUserWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            // Sign in success, update UI with the signed-in user's information
+//                            Log.d(TAG, "createUserWithEmail:success");
+//                            FirebaseUser user = mAuth.getCurrentUser();
+////                            updateUI(user);
+//                        } else {
+//                            // If sign in fails, display a message to the user.
+//                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+//                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+//                                    Toast.LENGTH_SHORT).show();
+////                            updateUI(null);
+//                        }
+//
+//                        // ...
+//                    }
+//                });
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +105,7 @@ public class StartActivity extends AppCompatActivity {
                         Toast.makeText(StartActivity.this,
                                 task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
-                        createNewUser(email, username,mAuth.getCurrentUser().getUid());
+                        createNewUser(email, username,password ,mAuth.getCurrentUser().getUid());
                     }
                 } catch (Exception e) {
                     avi.hide();
@@ -95,15 +115,16 @@ public class StartActivity extends AppCompatActivity {
             }
         });
     }
-    private void createNewUser(String email, final String username, String uid) {
+    private void createNewUser(String email, final String username, String password, String uid) {
         databaseUserProfile = FirebaseDatabase.getInstance().getReference().child("skyChat").child("userProfile").child(uid);
         databaseUserProfile.child("email").setValue(email);
-        databaseUserProfile.child("username").setValue(username).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseUserProfile.child("username").setValue(username);
+        databaseUserProfile.child("password").setValue(password).addOnCompleteListener(new OnCompleteListener<Void>() {
 
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 avi.hide();
-                Intent intent=new Intent(StartActivity.this, SignInActivity.class);
+                Intent intent=new Intent(StartActivity.this, MainActivity.class);
                 intent.putExtra("username",username);
                 startActivity(intent);
                 finish();
