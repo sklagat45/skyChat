@@ -71,6 +71,7 @@ dependencies {
     implementation 'com.robertlevonyan.view:CustomFloatingActionButton:2.1.0'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
+    implementation 'com.android.support:design:28.0.0'
 
 //    implementation'com.twitter.sdk.android:twitter-core:3.x'
 //    implementation'com.facebook.sdk.android:facebook-android-sdk:3.x'
