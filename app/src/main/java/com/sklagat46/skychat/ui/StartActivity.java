@@ -126,6 +126,7 @@ public class StartActivity extends AppCompatActivity {
                 avi.hide();
                 Intent intent=new Intent(StartActivity.this, MainActivity.class);
                 intent.putExtra("username",username);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             }
