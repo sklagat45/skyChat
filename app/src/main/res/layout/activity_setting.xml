@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/background"
+    android:layout_height="match_parent"
+    tools:context=".ui.SettingsActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="123dp"
+        android:background="@color/background"
+        android:src="@drawable/profile" />
+
+    <TextView
+        android:id="@+id/setUserNameTV"
+        android:layout_width="133dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_image"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="138dp"
+        android:text="UserName" />
+
+    <TextView
+        android:id="@+id/statusET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/setUserNameTV"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="108dp"
+        android:text="@string/default_status" />
+
+    <Button
+        android:id="@+id/setImgBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/statusET"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="149dp"
+        android:layout_marginEnd="120dp"
+        android:text="Change User Image" />
+
+    <Button
+        android:id="@+id/setStatusBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/setImgBtn"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="113dp"
+        android:text="Change User Status" />
+
+</RelativeLayout>
