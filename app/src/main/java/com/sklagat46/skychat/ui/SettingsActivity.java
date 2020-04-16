@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.sklagat46.skychat.R;
 
 import butterknife.BindView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static butterknife.ButterKnife.bind;
 
@@ -25,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
     FirebaseUser mCurrentUser;
 
     @BindView(R.id.profile_image)
-    EditText user_img;
+    CircleImageView user_img;
     @BindView(R.id.setUserNameTV)
     EditText user_name;
     @BindView(R.id.statusET)
