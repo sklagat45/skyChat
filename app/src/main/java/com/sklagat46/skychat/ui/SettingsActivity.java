@@ -1,8 +1,7 @@
 package com.sklagat46.skychat.ui;
 
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,9 +27,9 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.profile_image)
     CircleImageView user_img;
     @BindView(R.id.setUserNameTV)
-    EditText user_name;
+    TextView user_name;
     @BindView(R.id.statusET)
-    Button user_status;
+    TextView user_status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
