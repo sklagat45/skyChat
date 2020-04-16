@@ -18,8 +18,9 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/main_tabs"
+            app:tabSelectedTextColor="@color/colorFabIcon"
             android:layout_width="match_parent"
-            android:layout_height="53dp"
+            android:layout_height="60dp"
             android:layout_marginBottom="29dp" />
     </com.google.android.material.appbar.AppBarLayout>
 

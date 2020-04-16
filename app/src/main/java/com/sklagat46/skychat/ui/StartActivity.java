@@ -21,13 +21,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.sklagat46.skychat.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
 
 import static butterknife.ButterKnife.bind;
-
 
 public class StartActivity extends AppCompatActivity {
     Button btnRegister;
@@ -61,26 +61,6 @@ public class StartActivity extends AppCompatActivity {
                 finish();
             }
         });
-//        mAuth.createUserWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "createUserWithEmail:success");
-//                            FirebaseUser user = mAuth.getCurrentUser();
-////                            updateUI(user);
-//                        } else {
-//                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-//                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-//                                    Toast.LENGTH_SHORT).show();
-////                            updateUI(null);
-//                        }
-//
-//                        // ...
-//                    }
-//                });
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +85,7 @@ public class StartActivity extends AppCompatActivity {
                         Toast.makeText(StartActivity.this,
                                 task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
-                        createNewUser(email, username,password ,mAuth.getCurrentUser().getUid());
+                        createNewUser(email, username ,mAuth.getCurrentUser().getUid());
                     }
                 } catch (Exception e) {
                     avi.hide();
@@ -115,11 +95,19 @@ public class StartActivity extends AppCompatActivity {
             }
         });
     }
-    private void createNewUser(String email, final String username, String password, String uid) {
+    private void createNewUser(String email, final String username, String uid) {
         databaseUserProfile = FirebaseDatabase.getInstance().getReference().child("skyChat").child("userProfile").child(uid);
-        databaseUserProfile.child("email").setValue(email);
-        databaseUserProfile.child("username").setValue(username);
-        databaseUserProfile.child("password").setValue(password).addOnCompleteListener(new OnCompleteListener<Void>() {
+        HashMap<String, String> userMap= new HashMap<>();
+        userMap.put("username",username);
+        userMap.put("status","hey there, am using SkyChat");
+        userMap.put("image","default");
+        userMap.put("thump_image","default");
+        databaseUserProfile.setValue(userMap);
+        databaseUserProfile.child("email").setValue(email)
+//        databaseUserProfile.child("username").setValue(username);
+//        databaseUserProfile.child("password").setValue(password)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+
 
             @Override
             public void onComplete(@NonNull Task<Void> task) {
